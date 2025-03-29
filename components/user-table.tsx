@@ -12,7 +12,7 @@ import {
 import React from "react";
 import { nanoid } from "nanoid";
 
-const PAGE_SIZE = 20;
+const PAGE_SIZE = 35;
 
 export default function UserTable() {
   const [users, setUsers] = React.useState<User[]>([]);
@@ -68,6 +68,7 @@ export default function UserTable() {
       <Table>
         <TableHeader>
           <TableRow>
+            <TableHead>#</TableHead>
             <TableHead>Username</TableHead>
             <TableHead>Full Name</TableHead>
             <TableHead>Weight (lbs)</TableHead>
@@ -80,7 +81,8 @@ export default function UserTable() {
             users.map((user, idx) => {
               if (idx === users.length - 1) {
                 return (
-                  <TableRow key={nanoid()} ref={lastRowRef}>
+                  <TableRow key={`user-row-${user.userId}`} ref={lastRowRef}>
+                    <TableCell>{idx + 1}</TableCell>
                     <TableCell>
                       <a
                         className="text-sky-400 hover:text-sky-500"
@@ -98,6 +100,7 @@ export default function UserTable() {
               }
               return (
                 <TableRow key={nanoid()}>
+                  <TableCell>{idx + 1}</TableCell>
                   <TableCell>
                     <a
                       className="text-sky-400 hover:text-sky-500"
@@ -124,7 +127,7 @@ export default function UserTable() {
 function formatDate(t: Date): string {
   return (
     `${t.getFullYear()}/` +
-    `${String(t.getMonth()).padStart(2, "0")}/` +
+    `${String(t.getMonth() + 1).padStart(2, "0")}/` +
     `${String(t.getDate()).padStart(2, "0")} ` +
     `${String(t.getHours()).padStart(2, "0")}:` +
     `${String(t.getMinutes()).padStart(2, "0")}:` +
