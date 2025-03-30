@@ -10,7 +10,6 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import React from "react";
-import { nanoid } from "nanoid";
 
 const PAGE_SIZE = 35;
 
@@ -78,44 +77,26 @@ export default function UserTable() {
         </TableHeader>
         <TableBody>
           {users &&
-            users.map((user, idx) => {
-              if (idx === users.length - 1) {
-                return (
-                  <TableRow key={`user-row-${user.userId}`} ref={lastRowRef}>
-                    <TableCell>{idx + 1}</TableCell>
-                    <TableCell>
-                      <a
-                        className="text-sky-400 hover:text-sky-500"
-                        href={`#${user.userId}`}
-                      >
-                        {user.username}
-                      </a>
-                    </TableCell>
-                    <TableCell>{user.name}</TableCell>
-                    <TableCell>{user.weight}</TableCell>
-                    <TableCell>{formatDate(user.lastLogin)}</TableCell>
-                    <TableCell>{formatDate(user.createdAt)}</TableCell>
-                  </TableRow>
-                );
-              }
-              return (
-                <TableRow key={nanoid()}>
-                  <TableCell>{idx + 1}</TableCell>
-                  <TableCell>
-                    <a
-                      className="text-sky-400 hover:text-sky-500"
-                      href={`#${user.userId}`}
-                    >
-                      {user.username}
-                    </a>
-                  </TableCell>
-                  <TableCell>{user.name}</TableCell>
-                  <TableCell>{user.weight}</TableCell>
-                  <TableCell>{formatDate(user.lastLogin)}</TableCell>
-                  <TableCell>{formatDate(user.createdAt)}</TableCell>
-                </TableRow>
-              );
-            })}
+            users.map((user, idx) => (
+              <TableRow
+                key={`user-row-${user.userId}`}
+                ref={idx === users.length - 1 ? lastRowRef : null}
+              >
+                <TableCell>{idx + 1}</TableCell>
+                <TableCell>
+                  <a
+                    className="text-sky-400 hover:text-sky-500"
+                    href={`#${user.userId}`}
+                  >
+                    {user.username}
+                  </a>
+                </TableCell>
+                <TableCell>{user.name}</TableCell>
+                <TableCell>{user.weight}</TableCell>
+                <TableCell>{formatDate(user.lastLogin)}</TableCell>
+                <TableCell>{formatDate(user.createdAt)}</TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
 
